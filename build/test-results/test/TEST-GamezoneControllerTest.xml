@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="GamezoneControllerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2021-01-12T14:09:31" hostname="PEDRO" time="0.059">
+  <properties/>
+  <testcase name="after putting a MapCharacter on the map its position shouldn't be null" classname="GamezoneControllerTest" time="0.053"/>
+  <testcase name="moving Character North from (0,0) position must update grid with Character at position (0,1)" classname="GamezoneControllerTest" time="0.002"/>
+  <testcase name="moving Character East from (0,0) position must update grid with Character at position (1,0)" classname="GamezoneControllerTest" time="0.001"/>
+  <testcase name="when moving character from Cell, the Cell he moved from should be null" classname="GamezoneControllerTest" time="0.0"/>
+  <testcase name="if MapCharacter is at xCoordinate edge he cannot move East" classname="GamezoneControllerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
