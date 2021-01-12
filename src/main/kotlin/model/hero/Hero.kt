@@ -4,10 +4,10 @@ import model.item.HeroItem
 import model.map_character.MapCharacter
 
 sealed class Hero() : MapCharacter {
-    abstract val heroItem: HeroItem
+    abstract var heroItem: HeroItem
     abstract val name: String
 
-    data class MagicHero(val magicPoints: Int, override val name: String, override var health: Int = 60, override val heroItem: HeroItem): Hero() {
+    data class MagicHero(val magicPoints: Int, override val name: String, override var health: Int = 60, override var heroItem: HeroItem): Hero() {
         fun castSpell(){
             println("$name cast a spell")
         }
@@ -18,13 +18,13 @@ sealed class Hero() : MapCharacter {
         }
     }
 
-    data class WarriorHero(val strength: Int, override val name: String, override var health: Int = 60, override val heroItem: HeroItem): Hero() {
+    data class WarriorHero(val strength: Int, override val name: String, override var health: Int = 60, override var heroItem: HeroItem): Hero() {
         override fun attack(opponent: MapCharacter) {
             println("$name attacks with power $strength")
         }
     }
 
-    data class ShieldHero(val defense: Int, override val name: String, override var health: Int = 500, override val heroItem: HeroItem): Hero() {
+    data class ShieldHero(val defense: Int, override val name: String, override var health: Int = 500, override var heroItem: HeroItem): Hero() {
         override fun attack(opponent: MapCharacter) {
             println("$name did one attack damage :C")
         }
@@ -34,7 +34,7 @@ sealed class Hero() : MapCharacter {
         }
     }
 
-    data class BowHero(val stealthPoints: Int, override val name: String, override var health: Int = 60, override val heroItem: HeroItem): Hero() {
+    data class BowHero(val stealthPoints: Int, override val name: String, override var health: Int = 60, override var heroItem: HeroItem): Hero() {
         override fun attack(opponent: MapCharacter) {
             println("Long range attack")
         }

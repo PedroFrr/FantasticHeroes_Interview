@@ -29,6 +29,7 @@ class GamezoneController(val gamezone: Gamezone) {
     //Moves Character (Heroes and Monsters) on the map after all the validations are good
     fun moveCharacter(character: MapCharacter, direction: Directions) {
 
+        //TODO if character ends up on the same cell they have to fight and the looser dies and leaves the field
         val characterCellBeforeMoving = gamezone.getCharacterCell(character)
         if (characterCanMove(characterCellBeforeMoving, direction)) {
             val characterCellAfterMoving = moveCharacterAndReturnCharacterPosition(character, direction)
@@ -76,6 +77,10 @@ class GamezoneController(val gamezone: Gamezone) {
 
         }
     }
+
+    fun getNumberOfHeroesOnTheMap() = gamezone.getNumberOfHeroesOnTheMap()
+
+    fun getNumberOfCharactersOnTheMap() = gamezone.getNumberOfCharactersOnTheMap()
 
 
 }

@@ -1,6 +1,7 @@
 package model.gamezone
 
 import model.directions.Directions
+import model.hero.Hero
 import model.map_character.MapCharacter
 
 class Gamezone(val grid: Grid) {
@@ -30,5 +31,9 @@ class Gamezone(val grid: Grid) {
     fun addCharacterToCell(cell: Cell, character: MapCharacter) {
         cellValues[cell] = character //updates Cell with given Character
     }
+
+    fun getNumberOfHeroesOnTheMap(): Int = cellValues.filter { it.value is Hero }.count()
+
+    fun getNumberOfCharactersOnTheMap(): Int = cellValues.filter { it.value != null }.count()
 
 }

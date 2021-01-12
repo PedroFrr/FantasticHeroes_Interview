@@ -6,6 +6,7 @@ import model.gamezone.Grid
 import model.hero.Hero
 import model.item.HeroItem
 import model.map_character.MapCharacter
+import model.monster.Monster
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -18,6 +19,7 @@ class GamezoneControllerTest {
     private lateinit var gamezone: Gamezone
     private lateinit var mapCharacter: MapCharacter
     private lateinit var gamezoneController: GamezoneController
+    private lateinit var monster: Monster
 
     @Before
     fun setup() {
@@ -25,6 +27,7 @@ class GamezoneControllerTest {
         gamezone = Gamezone(grid = grid) //setup Gamezone with 4x4 grid
         gamezoneController = GamezoneController(gamezone)
         mapCharacter = Hero.BowHero(name = "All Mighty",stealthPoints = 50, health = 100, heroItem = HeroItem.Weapon(name="Sword"))
+        monster = Monster(100)
 
     }
 
@@ -80,6 +83,34 @@ class GamezoneControllerTest {
         //TODO maybe he shouldn't remain on the same place but instead return an error or something like that
         assertEquals(cellAtTheEdge, mapCharacterCellAfterMovement) //the Character should remain on the same place
 
+    }
+
+    @Test
+    fun `when the gamezone has 1 hero the total count of heroes must be 1`(){
+        gamezoneController.putCharacterOnGamezoneFirstTime(mapCharacter)
+        val numberOfMapHeroes = gamezoneController.getNumberOfHeroesOnTheMap()
+
+        assertEquals(1, numberOfMapHeroes)
+
+    }
+
+    @Test
+    fun `when the gamezone has 1 hero and 1 monster the total count of heroes must be 1`(){
+        gamezoneController.putCharacterOnGamezoneFirstTime(mapCharacter)
+        gamezoneController.putCharacterOnGamezoneFirstTime(monster)
+        val numberOfMapHeroes = gamezoneController.getNumberOfHeroesOnTheMap()
+
+        assertEquals(1, numberOfMapHeroes)
+
+    }
+
+    @Test
+    fun `when the gamezone has 1 hero and 1 monster the total number of characters on the map must be 2`(){
+        gamezoneController.putCharacterOnGamezoneFirstTime(mapCharacter)
+        gamezoneController.putCharacterOnGamezoneFirstTime(monster)
+        val numberOfMapCharacters = gamezoneController.getNumberOfCharactersOnTheMap()
+
+        assertEquals(2, numberOfMapCharacters)
     }
 
     
