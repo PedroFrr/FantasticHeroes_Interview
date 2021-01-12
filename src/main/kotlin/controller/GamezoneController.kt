@@ -6,6 +6,7 @@ import model.gamezone.Gamezone
 import model.hero.Hero
 import model.map_character.MapCharacter
 import model.monster.Monster
+import kotlin.random.Random
 
 /**
  * The controller for the Gamezone actions.
@@ -38,17 +39,7 @@ class GamezoneController(private val gamezone: Gamezone) {
             if (characterOccupyingOtherCell != null) {
                 if (gamezone.isDifferentMapCharacterOnCell(character, characterCellBeforeMoving)) {
 
-                    //TODO refactor this logic doesn't seem right
-                    when (character) {
-                        is Hero -> setHeroAndMonsterCombat(
-                            hero = character,
-                            monster = characterOccupyingOtherCell as Monster
-                        )
-                        is Monster -> setHeroAndMonsterCombat(
-                            hero = characterOccupyingOtherCell as Hero,
-                            monster = character
-                        )
-                    }
+                    setFightBetweenOpponents(firstOpponent = character, secondOpponent = characterOccupyingOtherCell)
 
                 }
                 //If after the fight (if it even happened) the character has health, it will replace the Cell
@@ -107,22 +98,29 @@ class GamezoneController(private val gamezone: Gamezone) {
 
     fun getNumberOfCharactersOnTheMap() = gamezone.getNumberOfCharactersOnTheMap()
 
-    fun setHeroAndMonsterCombat(hero: Hero, monster: Monster) {
+    //TODO maybe still refactor
+    //On a real app I would this processing asynchronously as to not block the User actions or set a loading state or something
+    fun setFightBetweenOpponents(firstOpponent: MapCharacter, secondOpponent: MapCharacter) {
 
-        //On a real app I would this processing asynchronously as to not block the User actions or set a loading state or something
-        while (hero.health > 0 && monster.health > 0) {
-            hero.attack(monster)
+        val randomTurn = (0..1).random()
+        //defines who is the first opponent to attack based on the randomTurn number
+        val firstTurnOpponent = if(randomTurn == 0){ firstOpponent }else {secondOpponent}
+        val secondTurnOpponent = if(randomTurn == 0){ secondOpponent }else {firstOpponent}
 
-            //if the monster died he cannot attack
-            if (monster.health > 0) {
-                monster.attack(hero)
-                if (hero.health <= 0){
-                    val heroCell = gamezone.getCharacterCell(hero)
-                    gamezone.setCellAsEmpty(heroCell)
+
+        while (firstOpponent.health > 0 && secondOpponent.health > 0) {
+            firstTurnOpponent.attack(secondTurnOpponent)
+
+            //if the second opponent died he cannot attack
+            if (secondTurnOpponent.health > 0) {
+                secondTurnOpponent.attack(firstTurnOpponent)
+                if (firstTurnOpponent.health <= 0){
+                    val firstOpponentCell = gamezone.getCharacterCell(firstTurnOpponent)
+                    gamezone.setCellAsEmpty(firstOpponentCell)
                 }
             }else{
-                val monsterCell = gamezone.getCharacterCell(monster)
-                gamezone.setCellAsEmpty(monsterCell)
+                val secondOpponentCell = gamezone.getCharacterCell(secondTurnOpponent)
+                gamezone.setCellAsEmpty(secondOpponentCell)
             }
 
         }

@@ -99,6 +99,8 @@
 >Monster was attacked he now has 2000.0 health points. Ouch! 
 @Monster attacked and the opponent lost 2 of its health points 
 
+@Monster attacked and the opponent lost 2 of its health points 
+
 >Monster was attacked he now has 4940.0 health points. Ouch! 
 
 @Monster attacked and the opponent lost 2 of its health points 
@@ -292,9 +294,5 @@
 @Monster attacked and the opponent lost 2 of its health points 
 
 >Monster was attacked he now has 2060.0 health points. Ouch! 
-
-@Monster attacked and the opponent lost 2 of its health points 
-
->Monster was attacked he now has 2000.0 health points. Ouch! 
 
 @Monster attacked and the opponent lost 2 of its health points 

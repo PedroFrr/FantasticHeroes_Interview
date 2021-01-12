@@ -118,7 +118,7 @@ class GamezoneControllerTest {
     @Test
     fun `when the monster wins the combat between a hero the hero health must be equals or less than 0`(){
         gamezoneController.putCharacterOnGamezoneFirstTime(hero)
-        gamezoneController.setHeroAndMonsterCombat(hero, monster)
+        gamezoneController.setFightBetweenOpponents(hero, monster)
 
         assertTrue(hero.health <= 0)
     }
@@ -130,7 +130,7 @@ class GamezoneControllerTest {
         val getCellValueBeforeCombat = gamezone.getCellValue(heroCell)
         assertNotNull(getCellValueBeforeCombat)
 
-        gamezoneController.setHeroAndMonsterCombat(hero, monster)
+        gamezoneController.setFightBetweenOpponents(hero, monster)
         val getCellValueAfterCombat = gamezone.getCellValue(heroCell)
 
         assertNull(getCellValueAfterCombat)

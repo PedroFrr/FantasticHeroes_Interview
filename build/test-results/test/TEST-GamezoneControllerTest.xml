@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="GamezoneControllerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-01-12T19:28:47" hostname="PEDRO" time="0.099">
+<testsuite name="GamezoneControllerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-01-12T23:01:29" hostname="PEDRO" time="0.095">
   <properties/>
-  <testcase name="if an Hero fights with a Monster and looses it must disappear from the Gamezone" classname="GamezoneControllerTest" time="0.076"/>
+  <testcase name="if an Hero fights with a Monster and looses it must disappear from the Gamezone" classname="GamezoneControllerTest" time="0.074"/>
   <testcase name="when the gamezone has 1 hero and 1 monster the total count of heroes must be 1" classname="GamezoneControllerTest" time="0.0"/>
-  <testcase name="when the gamezone has 1 hero and 1 monster the total number of characters on the map must be 2" classname="GamezoneControllerTest" time="0.001"/>
-  <testcase name="after putting a MapCharacter on the map its position shouldn't be null" classname="GamezoneControllerTest" time="0.0"/>
-  <testcase name="moving Character North from (0,0) position must update grid with Character at position (0,1)" classname="GamezoneControllerTest" time="0.002"/>
-  <testcase name="moving Character East from (0,0) position must update grid with Character at position (1,0)" classname="GamezoneControllerTest" time="0.001"/>
-  <testcase name="when moving character from Cell, the Cell he moved from should be null" classname="GamezoneControllerTest" time="0.001"/>
-  <testcase name="if MapCharacter is at xCoordinate edge he cannot move East" classname="GamezoneControllerTest" time="0.001"/>
-  <testcase name="when the monster wins the combat between a hero the hero health must be equals or less than 0" classname="GamezoneControllerTest" time="0.012"/>
+  <testcase name="when the gamezone has 1 hero and 1 monster the total number of characters on the map must be 2" classname="GamezoneControllerTest" time="0.0"/>
+  <testcase name="after putting a MapCharacter on the map its position shouldn't be null" classname="GamezoneControllerTest" time="0.001"/>
+  <testcase name="moving Character North from (0,0) position must update grid with Character at position (0,1)" classname="GamezoneControllerTest" time="0.003"/>
+  <testcase name="moving Character East from (0,0) position must update grid with Character at position (1,0)" classname="GamezoneControllerTest" time="0.003"/>
+  <testcase name="when moving character from Cell, the Cell he moved from should be null" classname="GamezoneControllerTest" time="0.0"/>
+  <testcase name="if MapCharacter is at xCoordinate edge he cannot move East" classname="GamezoneControllerTest" time="0.0"/>
+  <testcase name="when the monster wins the combat between a hero the hero health must be equals or less than 0" classname="GamezoneControllerTest" time="0.011"/>
   <testcase name="when the gamezone has 1 hero the total count of heroes must be 1" classname="GamezoneControllerTest" time="0.0"/>
   <system-out><![CDATA[Monster was attacked he now has 4940.0 health points. Ouch! 
 Monster attacked and the opponent lost 2 of its health points 
@@ -111,6 +111,7 @@ Monster was attacked he now has 2060.0 health points. Ouch!
 Monster attacked and the opponent lost 2 of its health points 
 Monster was attacked he now has 2000.0 health points. Ouch! 
 Monster attacked and the opponent lost 2 of its health points 
+Monster attacked and the opponent lost 2 of its health points 
 Monster was attacked he now has 4940.0 health points. Ouch! 
 Monster attacked and the opponent lost 2 of its health points 
 Monster was attacked he now has 4880.0 health points. Ouch! 
@@ -208,8 +209,6 @@ Monster attacked and the opponent lost 2 of its health points
 Monster was attacked he now has 2120.0 health points. Ouch! 
 Monster attacked and the opponent lost 2 of its health points 
 Monster was attacked he now has 2060.0 health points. Ouch! 
-Monster attacked and the opponent lost 2 of its health points 
-Monster was attacked he now has 2000.0 health points. Ouch! 
 Monster attacked and the opponent lost 2 of its health points 
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
