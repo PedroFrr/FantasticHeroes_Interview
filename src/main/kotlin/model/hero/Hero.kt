@@ -7,38 +7,40 @@ sealed class Hero() : MapCharacter {
     abstract var heroItem: HeroItem
     abstract val name: String
 
-    data class MagicHero(val magicPoints: Int, override val name: String, override var health: Int = 60, override var heroItem: HeroItem): Hero() {
+    //set heroPower based on its specific Hero Type attributes
+    private val heroPower: Double
+        get() = when(this) {
+        is MagicHero -> (magicPoints * health).toDouble()
+        is WarriorHero -> strength.toDouble()
+        is ShieldHero -> defense * 0.5
+        is BowHero -> (stealthPoints + name.length).toDouble()
+    }
+
+    override fun attack(opponent: MapCharacter) {
+        opponent.health -= heroPower
+    }
+
+    data class MagicHero(val magicPoints: Int, override val name: String, override var health: Double = 60.0, override var heroItem: HeroItem): Hero() {
         fun castSpell(){
             println("$name cast a spell")
         }
-
-        override fun attack(opponent: MapCharacter) {
-            println("$name attacked")
-            //maybe we could it could loose magicPoints when it attacks
-        }
     }
 
-    data class WarriorHero(val strength: Int, override val name: String, override var health: Int = 60, override var heroItem: HeroItem): Hero() {
-        override fun attack(opponent: MapCharacter) {
-            println("$name attacks with power $strength")
-        }
+    data class WarriorHero(val strength: Int, override val name: String, override var health: Double = 60.0, override var heroItem: HeroItem): Hero() {
+
     }
 
-    data class ShieldHero(val defense: Int, override val name: String, override var health: Int = 500, override var heroItem: HeroItem): Hero() {
-        override fun attack(opponent: MapCharacter) {
-            println("$name did one attack damage :C")
-        }
+    data class ShieldHero(val defense: Int, override val name: String, override var health: Double = 500.0, override var heroItem: HeroItem): Hero() {
 
         fun defend(opponent: MapCharacter){
             println("$name defended. Opponent attack was useless.")
         }
     }
 
-    data class BowHero(val stealthPoints: Int, override val name: String, override var health: Int = 60, override var heroItem: HeroItem): Hero() {
-        override fun attack(opponent: MapCharacter) {
-            println("Long range attack")
-        }
+    data class BowHero(val stealthPoints: Int, override val name: String, override var health: Double = 100.0, override var heroItem: HeroItem): Hero() {
     }
+
+
 
 }
 

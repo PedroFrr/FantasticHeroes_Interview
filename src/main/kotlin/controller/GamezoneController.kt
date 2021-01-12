@@ -3,7 +3,9 @@ package controller
 import model.directions.Directions
 import model.gamezone.Cell
 import model.gamezone.Gamezone
+import model.hero.Hero
 import model.map_character.MapCharacter
+import model.monster.Monster
 
 /*
 Class that performs the actions on the Gamezone
@@ -26,15 +28,26 @@ class GamezoneController(val gamezone: Gamezone) {
 
     }
 
+    //TODO Refactor this method. It has too many responsibilities
     //Moves Character (Heroes and Monsters) on the map after all the validations are good
     fun moveCharacter(character: MapCharacter, direction: Directions) {
 
-        //TODO if character ends up on the same cell they have to fight and the looser dies and leaves the field
         val characterCellBeforeMoving = gamezone.getCharacterCell(character)
         if (characterCanMove(characterCellBeforeMoving, direction)) {
-            val characterCellAfterMoving = moveCharacterAndReturnCharacterPosition(character, direction)
-            gamezone.addCharacterToCell(characterCellAfterMoving, character)  //updates Cell with value for the given Character
-            gamezone.setCellAsEmpty(characterCellBeforeMoving) //after the Character moves in any given Direction its old Cell must be emptied (set to null)
+            val characterCellCharacterWillEndUp = getCellToWhichTheCharacterIsMoving(character, direction)
+            if(character is Hero){
+                if(gamezone.isHeroMovingToMonsterCell(characterCellBeforeMoving)){
+                    val monsterThatIsOccupyingCell = gamezone.getCellValue(characterCellCharacterWillEndUp) as Monster
+                    setHeroAndMonsterCombat(hero = character, monster = monsterThatIsOccupyingCell )
+                }
+            }
+
+            //If after the fight (if it even happened) the hero has health, it will replace the Cell
+            if (character.health > 0){
+                gamezone.addCharacterToCell(characterCellCharacterWillEndUp, character)  //updates Cell with value for the given Character
+                gamezone.setCellAsEmpty(characterCellBeforeMoving) //after the Character moves in any given Direction its old Cell must be emptied (set to null)
+            }
+
         } else {
             //if character can't move do an early return (nothing happens)
             return
@@ -61,7 +74,7 @@ class GamezoneController(val gamezone: Gamezone) {
     //West and East move the Character on the x axis
     //if the actual coordinates of the Character don't allow it to move, the position remains the same (we could return an error message, but I'm keeping it simple)
     //the Cell where the Character ends up on the Gamezone is returned on this method
-    private fun moveCharacterAndReturnCharacterPosition(character: MapCharacter, direction: Directions): Cell {
+    private fun getCellToWhichTheCharacterIsMoving(character: MapCharacter, direction: Directions): Cell {
         val characterCell = gamezone.getCharacterCell(character)
         val xCoordinate = characterCell.xCoordinate
         val yCoordinate = characterCell.yCoordinate
@@ -81,6 +94,23 @@ class GamezoneController(val gamezone: Gamezone) {
     fun getNumberOfHeroesOnTheMap() = gamezone.getNumberOfHeroesOnTheMap()
 
     fun getNumberOfCharactersOnTheMap() = gamezone.getNumberOfCharactersOnTheMap()
+
+    fun setHeroAndMonsterCombat(hero: Hero, monster: Monster){
+
+        //On a real app I would this processing asynchronously as to not block the User actions or set a loading state or something
+        while (hero.health > 0 && monster.health > 0){
+            hero.attack(monster)
+            println("Monster was attacked he now has ${monster.health} health points. Ouch! ")
+
+            //if the monster died he cannot attack
+            if(monster.health <= 0){
+                break
+            }
+            monster.attack(hero)
+            println("${hero.name} was attacked he now has ${hero.health} health points. That tickles ")
+        }
+
+    }
 
 
 }

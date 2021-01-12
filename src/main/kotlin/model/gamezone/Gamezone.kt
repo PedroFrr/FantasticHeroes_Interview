@@ -3,6 +3,7 @@ package model.gamezone
 import model.directions.Directions
 import model.hero.Hero
 import model.map_character.MapCharacter
+import model.monster.Monster
 
 class Gamezone(val grid: Grid) {
 
@@ -35,5 +36,8 @@ class Gamezone(val grid: Grid) {
     fun getNumberOfHeroesOnTheMap(): Int = cellValues.filter { it.value is Hero }.count()
 
     fun getNumberOfCharactersOnTheMap(): Int = cellValues.filter { it.value != null }.count()
+
+    fun isHeroMovingToMonsterCell(cell: Cell): Boolean = getCellValue(cell) is Monster
+
 
 }
