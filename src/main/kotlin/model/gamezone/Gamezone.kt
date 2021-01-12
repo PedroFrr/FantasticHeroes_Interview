@@ -13,6 +13,16 @@ class Gamezone(val grid: Grid) {
         grid.cells.forEach { unit -> unit.forEach { cell -> cellValues[cell] = null } }
     }
 
+    //For the first time the Character will be put on the Gamezone at random (on the unoccupied positions)
+    fun putCharacterOnGamezoneFirstTime(character: MapCharacter) {
+        val randomEmptyCell = cellValues.filterValues { it == null }
+            .map { Cell(it.key.xCoordinate, it.key.yCoordinate) }
+            .random()
+
+        setCharacterAtCell(randomEmptyCell, character)
+
+    }
+
     //Moves Character (Heroes and Monsters) on the map after all the validations are good
     fun moveCharacter(character: MapCharacter, direction: Directions) {
 
@@ -79,6 +89,8 @@ class Gamezone(val grid: Grid) {
     private fun emptyCell(cell: Cell) {
         cellValues[cell] = null
     }
+
+
 
 
 

@@ -7,6 +7,7 @@ import model.item.HeroItem
 import model.map_character.MapCharacter
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -56,4 +57,27 @@ class GamezoneTest {
         assertNull(getValueForCharacterPreviousCell)
     }
 
+    @Test
+    fun `after putting a MapCharacter on the map its position shouldn't be null`(){
+        val shieldHero = Hero.ShieldHero(name = "One for all", defense = 9000, heroItem = HeroItem.Weapon("sword"))
+        gamezone.putCharacterOnGamezoneFirstTime(shieldHero)
+        //after the Hero is put on the Gamezone its position should stop being null
+        assertNotNull(shieldHero)
+    }
+
+    @Test
+    fun `if MapCharacter is at xCoordinate edge he cannot move East`(){
+        val shieldHero = Hero.ShieldHero(name = "One for all", defense = 9000, heroItem = HeroItem.Weapon("sword"))
+        val cellAtTheEdge = Cell(4,4) //since the map is 4x4, this represents the edge of the gamezone
+        gamezone.setCharacterAtCell(cellAtTheEdge, shieldHero)
+
+        gamezone.moveCharacter(shieldHero, Directions.East)
+        val mapCharacterCellAfterMovement = gamezone.getCharacterCell(shieldHero)
+
+        //TODO maybe he shouldn't remain on the same place but instead return an error or something like that
+        assertEquals(cellAtTheEdge, mapCharacterCellAfterMovement) //the Character should remain on the same place
+
+    }
+
+    
 }
