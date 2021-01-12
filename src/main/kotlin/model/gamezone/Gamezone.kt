@@ -1,10 +1,14 @@
 package model.gamezone
 
-import model.directions.Directions
 import model.hero.Hero
 import model.map_character.MapCharacter
 import model.monster.Monster
 
+/**
+ * The Gamezone where monsters and heroes reside.
+ *
+ * This class allows the retrieval and definition of data on the Gamezone.
+ */
 class Gamezone(val grid: Grid) {
 
     //Represents a map with each cell and the corresponding Character (can be null if no Character exists at the position)

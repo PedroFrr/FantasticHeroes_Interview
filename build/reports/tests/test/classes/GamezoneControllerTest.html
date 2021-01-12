@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">1</div>
+<div class="counter">10</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.079s</div>
+<div class="counter">0.094s</div>
 <p>duration</p>
 </div>
 </td>
@@ -78,8 +78,53 @@
 </tr>
 </thead>
 <tr>
+<td class="success">after putting a MapCharacter on the map its position shouldn't be null</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">if MapCharacter is at xCoordinate edge he cannot move East</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">if an Hero fights with a Monster and looses it must disappear from the Gamezone</td>
+<td class="success">0.076s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">moving Character East from (0,0) position must update grid with Character at position (1,0)</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">moving Character North from (0,0) position must update grid with Character at position (0,1)</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">when moving character from Cell, the Cell he moved from should be null</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">when the gamezone has 1 hero and 1 monster the total count of heroes must be 1</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">when the gamezone has 1 hero and 1 monster the total number of characters on the map must be 2</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">when the gamezone has 1 hero the total count of heroes must be 1</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
 <td class="success">when the monster wins the combat between a hero the hero health must be equals or less than 0</td>
-<td class="success">0.079s</td>
+<td class="success">0.012s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -88,6 +133,106 @@
 <h2>Standard output</h2>
 <span class="code">
 <pre>Monster was attacked he now has 4940.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4880.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4820.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4760.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4700.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4640.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4580.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4520.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4460.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4400.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4340.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4280.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4220.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4160.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4100.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4040.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3980.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3920.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3860.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3800.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3740.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3680.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3620.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3560.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3500.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3440.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3380.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3320.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3260.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3200.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3140.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3080.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 3020.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2960.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2900.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2840.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2780.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2720.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2660.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2600.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2540.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2480.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2420.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2360.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2300.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2240.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2180.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2120.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2060.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 2000.0 health points. Ouch! 
+Monster attacked and the opponent lost 2 of its health points 
+Monster was attacked he now has 4940.0 health points. Ouch! 
 Monster attacked and the opponent lost 2 of its health points 
 Monster was attacked he now has 4880.0 health points. Ouch! 
 Monster attacked and the opponent lost 2 of its health points 
@@ -198,7 +343,7 @@ Monster attacked and the opponent lost 2 of its health points
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.6.1</a> at 12/01/2021, 16:38:56</p>
+<a href="http://www.gradle.org">Gradle 6.6.1</a> at 12/01/2021, 19:28:47</p>
 </div>
 </div>
 </body>

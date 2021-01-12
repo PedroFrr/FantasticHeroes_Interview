@@ -7,15 +7,13 @@ import model.hero.Hero
 import model.map_character.MapCharacter
 import model.monster.Monster
 
-/*
-Class that performs the actions on the Gamezone
-If I were to do this on Android I would had an intermediate layer to access the data and not directly from the data model (a repository or something)
+/**
+ * The controller for the Gamezone actions.
+ *
  */
-class GamezoneController(val gamezone: Gamezone) {
+class GamezoneController(private val gamezone: Gamezone) {
 
     private val gridSize = gamezone.grid.size
-
-    //TODO actions for the Gamezone
 
     //Places a Character on the Gamezone for the first time
     //For the first time the Character will be put on the Gamezone at random (on the unoccupied positions)
@@ -54,7 +52,7 @@ class GamezoneController(val gamezone: Gamezone) {
 
                 }
                 //If after the fight (if it even happened) the character has health, it will replace the Cell
-                if (character.health <= 0) {
+                if (character.health > 0) {
                     moveCharacterFromOneCellToAnother(character, cellCharacterWillMoveTo)
                 }
 
@@ -116,10 +114,16 @@ class GamezoneController(val gamezone: Gamezone) {
             hero.attack(monster)
 
             //if the monster died he cannot attack
-            if (monster.health <= 0) {
-                break
+            if (monster.health > 0) {
+                monster.attack(hero)
+                if (hero.health <= 0){
+                    val heroCell = gamezone.getCharacterCell(hero)
+                    gamezone.setCellAsEmpty(heroCell)
+                }
+            }else{
+                val monsterCell = gamezone.getCharacterCell(monster)
+                gamezone.setCellAsEmpty(monsterCell)
             }
-            monster.attack(hero)
 
         }
 

@@ -13,6 +13,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
+//TODO Refactor tests as I think some things can be in the setup since they repeat
 class GamezoneControllerTest {
 
     private lateinit var grid: Grid
@@ -116,12 +117,24 @@ class GamezoneControllerTest {
 
     @Test
     fun `when the monster wins the combat between a hero the hero health must be equals or less than 0`(){
+        gamezoneController.putCharacterOnGamezoneFirstTime(hero)
         gamezoneController.setHeroAndMonsterCombat(hero, monster)
 
         assertTrue(hero.health <= 0)
     }
 
-    
+    @Test
+    fun `if an Hero fights with a Monster and looses it must disappear from the Gamezone`(){
+        gamezoneController.putCharacterOnGamezoneFirstTime(hero)
+        val heroCell = gamezone.getCharacterCell(hero)
+        val getCellValueBeforeCombat = gamezone.getCellValue(heroCell)
+        assertNotNull(getCellValueBeforeCombat)
+
+        gamezoneController.setHeroAndMonsterCombat(hero, monster)
+        val getCellValueAfterCombat = gamezone.getCellValue(heroCell)
+
+        assertNull(getCellValueAfterCombat)
+    }
 
     
 }
