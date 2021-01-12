@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="GamezoneTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-01-12T01:35:07" hostname="PEDRO" time="0.106">
+<testsuite name="GamezoneTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-01-12T09:55:56" hostname="PEDRO" time="0.039">
   <properties/>
-  <testcase name="moving Character North from (0,0) position must update grid with Character at position (0,1)" classname="GamezoneTest" time="0.103"/>
-  <testcase name="moving Character East from (0,0) position must update grid with Character at position (1,0)" classname="GamezoneTest" time="0.003"/>
+  <testcase name="when moving character from Cell, the Cell he moved from should be null" classname="GamezoneTest" time="0.039"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

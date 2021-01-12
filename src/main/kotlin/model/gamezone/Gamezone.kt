@@ -20,7 +20,7 @@ class Gamezone(val grid: Grid) {
         if (characterCanMove(characterCellBeforeMoving, direction)) {
             val characterCellAfterMoving = moveCharacterAndReturnCharacterPosition(character, direction)
             setCharacterAtCell(characterCellAfterMoving, character)  //updates Cell with value for the given Character
-            //TODO empty Cell WhereCharacter was
+            emptyCell(characterCellBeforeMoving) //after the Character moves in any given Direction its old Cell must be emptied (set to null)
         } else {
             //if character can't move do an early return (nothing happens)
             return
@@ -73,6 +73,11 @@ class Gamezone(val grid: Grid) {
             Directions.West -> characterCell.copy(xCoordinate = xCoordinate - 1)
 
         }
+    }
+
+    //Empties Value for the given cell
+    private fun emptyCell(cell: Cell) {
+        cellValues[cell] = null
     }
 
 

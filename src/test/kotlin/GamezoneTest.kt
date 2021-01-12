@@ -8,6 +8,7 @@ import model.map_character.MapCharacter
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class GamezoneTest {
 
@@ -43,6 +44,16 @@ class GamezoneTest {
 
         assertNotNull(cellValue)
 
+    }
+
+    @Test
+    fun `when moving character from Cell, the Cell he moved from should be null`() {
+        gamezone.setCharacterAtCell(Cell(0,0), mapCharacter)
+        val characterCell = gamezone.getCharacterCell(mapCharacter)
+        gamezone.moveCharacter(mapCharacter, Directions.East)
+        val getValueForCharacterPreviousCell = gamezone.getCellValue(characterCell)
+
+        assertNull(getValueForCharacterPreviousCell)
     }
 
 }
