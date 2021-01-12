@@ -37,7 +37,10 @@ class Gamezone(val grid: Grid) {
 
     fun getNumberOfCharactersOnTheMap(): Int = cellValues.filter { it.value != null }.count()
 
-    fun isHeroMovingToMonsterCell(cell: Cell): Boolean = getCellValue(cell) is Monster
+    fun isDifferentMapCharacterOnCell(character: MapCharacter, cell: Cell): Boolean {
+        val characterOnCell = getCellValue(cell)
+        return (character is Hero && characterOnCell is Monster) || (character is Monster && characterOnCell is Hero)
+    }
 
 
 }

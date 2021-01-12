@@ -5,19 +5,19 @@ import model.gamezone.Gamezone
 import model.gamezone.Grid
 import model.hero.Hero
 import model.item.HeroItem
-import model.map_character.MapCharacter
 import model.monster.Monster
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class GamezoneControllerTest {
 
     private lateinit var grid: Grid
     private lateinit var gamezone: Gamezone
-    private lateinit var mapCharacter: MapCharacter
+    private lateinit var hero: Hero
     private lateinit var gamezoneController: GamezoneController
     private lateinit var monster: Monster
 
@@ -26,15 +26,15 @@ class GamezoneControllerTest {
         grid = Grid(size = 4) //setup grid 4x4
         gamezone = Gamezone(grid = grid) //setup Gamezone with 4x4 grid
         gamezoneController = GamezoneController(gamezone)
-        mapCharacter = Hero.BowHero(name = "All Mighty",stealthPoints = 50, health = 100, heroItem = HeroItem.Weapon(name="Sword"))
-        monster = Monster(100)
+        hero = Hero.BowHero(name = "All Mighty",stealthPoints = 50, heroItem = HeroItem.Weapon(name="Sword"))
+        monster = Monster(5000.0)
 
     }
 
     @Test
     fun `moving Character North from (0,0) position must update grid with Character at position (0,1)`() {
-        gamezone.addCharacterToCell(Cell(0,0), mapCharacter)
-        gamezoneController.moveCharacter(mapCharacter, Directions.North)
+        gamezone.addCharacterToCell(Cell(0,0), hero)
+        gamezoneController.moveCharacter(hero, Directions.North)
         val cellAtExpectedPosition = Cell(0, 1)
         val cellValue = gamezone.getCellValue(cellAtExpectedPosition)
 
@@ -44,8 +44,8 @@ class GamezoneControllerTest {
 
     @Test
     fun `moving Character East from (0,0) position must update grid with Character at position (1,0)`() {
-        gamezone.addCharacterToCell(Cell(0,0), mapCharacter)
-        gamezoneController.moveCharacter(mapCharacter, Directions.East)
+        gamezone.addCharacterToCell(Cell(0,0), hero)
+        gamezoneController.moveCharacter(hero, Directions.East)
         val cellAtExpectedPosition = Cell(1, 0)
         val cellValue = gamezone.getCellValue(cellAtExpectedPosition)
 
@@ -53,14 +53,15 @@ class GamezoneControllerTest {
 
     }
 
+    //TODO Refactor. Depends on the move character. I don't think I need to do getCellValue so many times
     @Test
     fun `when moving character from Cell, the Cell he moved from should be null`() {
-        gamezone.addCharacterToCell(Cell(0,0), mapCharacter)
-        val characterCell = gamezone.getCharacterCell(mapCharacter)
-        gamezoneController.moveCharacter(mapCharacter, Directions.East)
-        val getValueForCharacterPreviousCell = gamezone.getCellValue(characterCell)
+        gamezoneController.putCharacterOnGamezoneFirstTime(hero)
+        val characterCell = gamezone.getCharacterCell(hero)
+        gamezoneController.moveCharacter(hero, Directions.East)
+        val getValueForCellWhereCharacterWas = gamezone.getCellValue(characterCell)
 
-        assertNull(getValueForCharacterPreviousCell)
+        assertNull(getValueForCellWhereCharacterWas)
     }
 
     @Test
@@ -87,7 +88,7 @@ class GamezoneControllerTest {
 
     @Test
     fun `when the gamezone has 1 hero the total count of heroes must be 1`(){
-        gamezoneController.putCharacterOnGamezoneFirstTime(mapCharacter)
+        gamezoneController.putCharacterOnGamezoneFirstTime(hero)
         val numberOfMapHeroes = gamezoneController.getNumberOfHeroesOnTheMap()
 
         assertEquals(1, numberOfMapHeroes)
@@ -96,7 +97,7 @@ class GamezoneControllerTest {
 
     @Test
     fun `when the gamezone has 1 hero and 1 monster the total count of heroes must be 1`(){
-        gamezoneController.putCharacterOnGamezoneFirstTime(mapCharacter)
+        gamezoneController.putCharacterOnGamezoneFirstTime(hero)
         gamezoneController.putCharacterOnGamezoneFirstTime(monster)
         val numberOfMapHeroes = gamezoneController.getNumberOfHeroesOnTheMap()
 
@@ -106,12 +107,21 @@ class GamezoneControllerTest {
 
     @Test
     fun `when the gamezone has 1 hero and 1 monster the total number of characters on the map must be 2`(){
-        gamezoneController.putCharacterOnGamezoneFirstTime(mapCharacter)
+        gamezoneController.putCharacterOnGamezoneFirstTime(hero)
         gamezoneController.putCharacterOnGamezoneFirstTime(monster)
         val numberOfMapCharacters = gamezoneController.getNumberOfCharactersOnTheMap()
 
         assertEquals(2, numberOfMapCharacters)
     }
+
+    @Test
+    fun `when the monster wins the combat between a hero the hero health must be equals or less than 0`(){
+        gamezoneController.setHeroAndMonsterCombat(hero, monster)
+
+        assertTrue(hero.health <= 0)
+    }
+
+    
 
     
 }

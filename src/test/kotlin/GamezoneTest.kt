@@ -18,7 +18,7 @@ class GamezoneTest {
     fun setup() {
         grid = Grid(size = 4) //setup grid 4x4
         gamezone = Gamezone(grid = grid) //setup Gamezone with 4x4 grid
-        mapCharacter = Hero.BowHero(name = "All Mighty",stealthPoints = 50, health = 100, heroItem = HeroItem.Weapon(name="Sword"))
+        mapCharacter = Hero.BowHero(name = "All Mighty",stealthPoints = 50, heroItem = HeroItem.Weapon(name="Sword"))
     }
 
     @Test

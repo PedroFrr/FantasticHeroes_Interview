@@ -18,6 +18,7 @@ sealed class Hero() : MapCharacter {
 
     override fun attack(opponent: MapCharacter) {
         opponent.health -= heroPower
+        println("Monster was attacked he now has ${opponent.health} health points. Ouch! ")
     }
 
     data class MagicHero(val magicPoints: Int, override val name: String, override var health: Double = 60.0, override var heroItem: HeroItem): Hero() {

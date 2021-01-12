@@ -28,24 +28,38 @@ class GamezoneController(val gamezone: Gamezone) {
 
     }
 
-    //TODO Refactor this method. It has too many responsibilities
+    //TODO Refactor this method. It has too many responsibilities and too many conditions
     //Moves Character (Heroes and Monsters) on the map after all the validations are good
     fun moveCharacter(character: MapCharacter, direction: Directions) {
 
         val characterCellBeforeMoving = gamezone.getCharacterCell(character)
         if (characterCanMove(characterCellBeforeMoving, direction)) {
-            val characterCellCharacterWillEndUp = getCellToWhichTheCharacterIsMoving(character, direction)
-            if(character is Hero){
-                if(gamezone.isHeroMovingToMonsterCell(characterCellBeforeMoving)){
-                    val monsterThatIsOccupyingCell = gamezone.getCellValue(characterCellCharacterWillEndUp) as Monster
-                    setHeroAndMonsterCombat(hero = character, monster = monsterThatIsOccupyingCell )
-                }
-            }
+            val cellCharacterWillMoveTo = getCellToWhichTheCharacterIsMoving(character, direction)
+            val characterOccupyingOtherCell = gamezone.getCellValue(cellCharacterWillMoveTo)
+            //if the cell the character is moving to is empty he will just move there. But if it isn't empty he has to fight if the occupying character is of different class (Hero or Monster)
+            if (characterOccupyingOtherCell != null) {
+                if (gamezone.isDifferentMapCharacterOnCell(character, characterCellBeforeMoving)) {
 
-            //If after the fight (if it even happened) the hero has health, it will replace the Cell
-            if (character.health > 0){
-                gamezone.addCharacterToCell(characterCellCharacterWillEndUp, character)  //updates Cell with value for the given Character
-                gamezone.setCellAsEmpty(characterCellBeforeMoving) //after the Character moves in any given Direction its old Cell must be emptied (set to null)
+                    //TODO refactor this logic doesn't seem right
+                    when (character) {
+                        is Hero -> setHeroAndMonsterCombat(
+                            hero = character,
+                            monster = characterOccupyingOtherCell as Monster
+                        )
+                        is Monster -> setHeroAndMonsterCombat(
+                            hero = characterOccupyingOtherCell as Hero,
+                            monster = character
+                        )
+                    }
+
+                }
+                //If after the fight (if it even happened) the character has health, it will replace the Cell
+                if (character.health <= 0) {
+                    moveCharacterFromOneCellToAnother(character, cellCharacterWillMoveTo)
+                }
+
+            }else{
+                moveCharacterFromOneCellToAnother(character, cellCharacterWillMoveTo)
             }
 
         } else {
@@ -95,21 +109,26 @@ class GamezoneController(val gamezone: Gamezone) {
 
     fun getNumberOfCharactersOnTheMap() = gamezone.getNumberOfCharactersOnTheMap()
 
-    fun setHeroAndMonsterCombat(hero: Hero, monster: Monster){
+    fun setHeroAndMonsterCombat(hero: Hero, monster: Monster) {
 
         //On a real app I would this processing asynchronously as to not block the User actions or set a loading state or something
-        while (hero.health > 0 && monster.health > 0){
+        while (hero.health > 0 && monster.health > 0) {
             hero.attack(monster)
-            println("Monster was attacked he now has ${monster.health} health points. Ouch! ")
 
             //if the monster died he cannot attack
-            if(monster.health <= 0){
+            if (monster.health <= 0) {
                 break
             }
             monster.attack(hero)
-            println("${hero.name} was attacked he now has ${hero.health} health points. That tickles ")
+
         }
 
+    }
+
+    private fun moveCharacterFromOneCellToAnother(character: MapCharacter, cell: Cell) {
+        val characterCellBeforeMoving = gamezone.getCharacterCell(character)
+        gamezone.addCharacterToCell(cell, character)  //updates Cell with value for the given Character
+        gamezone.setCellAsEmpty(characterCellBeforeMoving) //after the Character moves in any given Direction its old Cell must be emptied (set to null)
     }
 
 
