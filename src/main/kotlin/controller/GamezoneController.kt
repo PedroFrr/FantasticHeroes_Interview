@@ -3,10 +3,7 @@ package controller
 import model.directions.Directions
 import model.gamezone.Cell
 import model.gamezone.Gamezone
-import model.hero.Hero
 import model.map_character.MapCharacter
-import model.monster.Monster
-import kotlin.random.Random
 
 /**
  * The controller for the Gamezone actions.
@@ -19,7 +16,7 @@ class GamezoneController(private val gamezone: Gamezone) {
     //Places a Character on the Gamezone for the first time
     //For the first time the Character will be put on the Gamezone at random (on the unoccupied positions)
     fun putCharacterOnGamezoneFirstTime(character: MapCharacter) {
-        val randomEmptyCell = gamezone.cellValues.filterValues { it == null }
+        val randomEmptyCell = gamezone.gamezoneEntries.filterValues { it == null }
             .map { Cell(it.key.xCoordinate, it.key.yCoordinate) }
             .random()
 
@@ -37,18 +34,18 @@ class GamezoneController(private val gamezone: Gamezone) {
             val characterOccupyingOtherCell = gamezone.getCellValue(cellCharacterWillMoveTo)
             //if the cell the character is moving to is empty he will just move there. But if it isn't empty he has to fight if the occupying character is of different class (Hero or Monster)
             if (characterOccupyingOtherCell != null) {
-                if (gamezone.isDifferentMapCharacterOnCell(character, characterCellBeforeMoving)) {
+                if (gamezone.isDifferentMapCharacterOnCell(character, characterOccupyingOtherCell)) {
 
                     setFightBetweenOpponents(firstOpponent = character, secondOpponent = characterOccupyingOtherCell)
 
                 }
                 //If after the fight (if it even happened) the character has health, it will replace the Cell
                 if (character.health > 0) {
-                    moveCharacterFromOneCellToAnother(character, cellCharacterWillMoveTo)
+                    moveCharacterToAnotherCell(character, cellCharacterWillMoveTo)
                 }
 
             }else{
-                moveCharacterFromOneCellToAnother(character, cellCharacterWillMoveTo)
+                moveCharacterToAnotherCell(character, cellCharacterWillMoveTo)
             }
 
         } else {
@@ -66,9 +63,9 @@ class GamezoneController(private val gamezone: Gamezone) {
         val characterYCoordinate = characterCell.yCoordinate
         return when (direction) {
             Directions.South -> characterYCoordinate != 0
-            Directions.North -> characterYCoordinate != gridSize
+            Directions.North -> characterYCoordinate != gridSize - 1
             Directions.West -> characterXCoordinate != 0
-            Directions.East -> characterXCoordinate != gridSize
+            Directions.East -> characterXCoordinate != gridSize - 1
         }
     }
 
@@ -127,11 +124,13 @@ class GamezoneController(private val gamezone: Gamezone) {
 
     }
 
-    private fun moveCharacterFromOneCellToAnother(character: MapCharacter, cell: Cell) {
+    private fun moveCharacterToAnotherCell(character: MapCharacter, cell: Cell) {
         val characterCellBeforeMoving = gamezone.getCharacterCell(character)
         gamezone.addCharacterToCell(cell, character)  //updates Cell with value for the given Character
         gamezone.setCellAsEmpty(characterCellBeforeMoving) //after the Character moves in any given Direction its old Cell must be emptied (set to null)
     }
+
+    fun printGamezoneEntries() = print(gamezone.getGamezoneEntries())
 
 
 }

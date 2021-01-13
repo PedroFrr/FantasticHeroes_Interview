@@ -27,7 +27,7 @@ sealed class Hero : MapCharacter {
         }
     }
 
-    data class WarriorHero(val strength: Int, override val name: String, override var health: Double = 60.0, override var heroItem: HeroItem): Hero()
+    data class WarriorHero(val strength: Int = 50, override val name: String, override var health: Double = 60.0, override var heroItem: HeroItem): Hero()
 
     data class ShieldHero(val defense: Int, override val name: String, override var health: Double = 500.0, override var heroItem: HeroItem): Hero() {
 
@@ -36,7 +36,7 @@ sealed class Hero : MapCharacter {
         }
     }
 
-    data class BowHero(val stealthPoints: Int, override val name: String, override var health: Double = 100.0, override var heroItem: HeroItem): Hero()
+    data class BowHero(val stealthPoints: Int = 200, override val name: String, override var health: Double = 100.0, override var heroItem: HeroItem): Hero()
 
 }
 

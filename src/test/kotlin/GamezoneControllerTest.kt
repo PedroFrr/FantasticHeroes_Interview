@@ -4,10 +4,10 @@ import model.gamezone.Cell
 import model.gamezone.Gamezone
 import model.gamezone.Grid
 import model.hero.Hero
-import model.item.HeroItem
 import model.monster.Monster
 import org.junit.Before
 import org.junit.Test
+import utils.longSword
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -27,7 +27,7 @@ class GamezoneControllerTest {
         grid = Grid(size = 4) //setup grid 4x4
         gamezone = Gamezone(grid = grid) //setup Gamezone with 4x4 grid
         gamezoneController = GamezoneController(gamezone)
-        hero = Hero.BowHero(name = "All Mighty",stealthPoints = 50, heroItem = HeroItem.Weapon(name="Sword"))
+        hero = Hero.BowHero(name = "All Mighty",stealthPoints = 50, heroItem = longSword)
         monster = Monster(5000.0)
 
     }
@@ -57,7 +57,8 @@ class GamezoneControllerTest {
     //TODO Refactor. Depends on the move character. I don't think I need to do getCellValue so many times
     @Test
     fun `when moving character from Cell, the Cell he moved from should be null`() {
-        gamezoneController.putCharacterOnGamezoneFirstTime(hero)
+        //I have to force this position otherwise the Hero might be randomly put on a edge and in this case he will not move (meaning its previous cell will not become null)
+        gamezone.addCharacterToCell(Cell(0,0), hero)
         val characterCell = gamezone.getCharacterCell(hero)
         gamezoneController.moveCharacter(hero, Directions.East)
         val getValueForCellWhereCharacterWas = gamezone.getCellValue(characterCell)
@@ -67,7 +68,7 @@ class GamezoneControllerTest {
 
     @Test
     fun `after putting a MapCharacter on the map its position shouldn't be null`(){
-        val shieldHero = Hero.ShieldHero(name = "One for all", defense = 9000, heroItem = HeroItem.Weapon("sword"))
+        val shieldHero = Hero.ShieldHero(name = "One for all", defense = 9000, heroItem = longSword)
         gamezoneController.putCharacterOnGamezoneFirstTime(shieldHero)
         //after the Hero is put on the Gamezone its position should stop being null
         assertNotNull(shieldHero)
@@ -75,8 +76,8 @@ class GamezoneControllerTest {
 
     @Test
     fun `if MapCharacter is at xCoordinate edge he cannot move East`(){
-        val shieldHero = Hero.ShieldHero(name = "One for all", defense = 9000, heroItem = HeroItem.Weapon("sword"))
-        val cellAtTheEdge = Cell(4,4) //since the map is 4x4, this represents the edge of the gamezone
+        val shieldHero = Hero.ShieldHero(name = "One for all", defense = 9000, heroItem = longSword)
+        val cellAtTheEdge = Cell(3,3) //since the map is 4x4, this represents the edge of the gamezone
         gamezone.addCharacterToCell(cellAtTheEdge, shieldHero)
 
         gamezoneController.moveCharacter(shieldHero, Directions.East)
