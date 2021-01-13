@@ -39,6 +39,8 @@ class Gamezone(val grid: Grid) {
 
     fun getNumberOfHeroesOnTheMap(): Int = gamezoneEntries.filter { it.value is Hero }.count()
 
+    fun getNumberOfMonstersOnTheMap(): Int = gamezoneEntries.filter { it.value is Monster }.count()
+
     fun getNumberOfCharactersOnTheMap(): Int = gamezoneEntries.filter { it.value != null }.count()
 
     fun isDifferentMapCharacterOnCell(character: MapCharacter, characterOccupyingOtherCell: MapCharacter): Boolean {

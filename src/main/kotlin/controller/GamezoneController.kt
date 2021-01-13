@@ -1,6 +1,7 @@
 package controller
 
 import model.directions.Directions
+import model.game_state.GameState
 import model.gamezone.Cell
 import model.gamezone.Gamezone
 import model.map_character.MapCharacter
@@ -12,6 +13,9 @@ import model.map_character.MapCharacter
 class GamezoneController(private val gamezone: Gamezone) {
 
     private val gridSize = gamezone.grid.size
+    private var _gameState: GameState = GameState.GameOngoing
+
+    fun getGameState() = _gameState
 
     //Places a Character on the Gamezone for the first time
     //For the first time the Character will be put on the Gamezone at random (on the unoccupied positions)
@@ -114,10 +118,12 @@ class GamezoneController(private val gamezone: Gamezone) {
                 if (firstTurnOpponent.health <= 0){
                     val firstOpponentCell = gamezone.getCharacterCell(firstTurnOpponent)
                     gamezone.setCellAsEmpty(firstOpponentCell)
+                    changeGameStateIfNeeded()
                 }
             }else{
                 val secondOpponentCell = gamezone.getCharacterCell(secondTurnOpponent)
                 gamezone.setCellAsEmpty(secondOpponentCell)
+                changeGameStateIfNeeded()
             }
 
         }
@@ -131,6 +137,25 @@ class GamezoneController(private val gamezone: Gamezone) {
     }
 
     fun printGamezoneEntries() = print(gamezone.getGamezoneEntries())
+
+    private fun changeGameStateIfNeeded() {
+        val numberOfMonstersOnMap = gamezone.getNumberOfMonstersOnTheMap()
+        val numberOfHeroesOnMap = gamezone.getNumberOfHeroesOnTheMap()
+
+        if (numberOfHeroesOnMap == 0) {
+            changeGameState(gameState = GameState.GameLost)
+            return
+        }
+
+        if (numberOfMonstersOnMap == 0) {
+            changeGameState(gameState = GameState.GameWon)
+            return
+        }
+    }
+
+    private fun changeGameState(gameState: GameState){
+        _gameState = gameState
+    }
 
 
 }

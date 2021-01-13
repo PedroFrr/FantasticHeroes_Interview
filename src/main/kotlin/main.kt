@@ -1,5 +1,6 @@
 import controller.GamezoneController
 import model.directions.Directions
+import model.game_state.GameState
 import model.gamezone.Gamezone
 import model.gamezone.Grid
 import utils.*
@@ -11,16 +12,16 @@ fun main() {
 
     //Sets some Characters on the Gamezone
     gamezoneController.putCharacterOnGamezoneFirstTime(allMighty)
-    gamezoneController.putCharacterOnGamezoneFirstTime(carnivoreMonster)
-    gamezoneController.putCharacterOnGamezoneFirstTime(herbivoreMonster)
-    gamezoneController.putCharacterOnGamezoneFirstTime(herbivoreMonster)
-    gamezoneController.putCharacterOnGamezoneFirstTime(herbivoreMonster)
+    gamezoneController.putCharacterOnGamezoneFirstTime(dragon)
+    gamezoneController.putCharacterOnGamezoneFirstTime(ogre)
+    gamezoneController.putCharacterOnGamezoneFirstTime(angel)
+    gamezoneController.putCharacterOnGamezoneFirstTime(elf)
     gamezoneController.putCharacterOnGamezoneFirstTime(bossMonster)
 
 
     println(gamezoneController.printGamezoneEntries())
 
-    while(gamezoneController.getNumberOfHeroesOnTheMap() > 0){
+    while(gamezoneController.getGameState() == GameState.GameOngoing){
         //Random Direction for the round
         val randomDirection = mutableListOf(Directions.North, Directions.East, Directions.South, Directions.West).shuffled().first()
 
@@ -28,7 +29,14 @@ fun main() {
 
     }
 
-    println("Game END")
+    val message = when (gamezoneController.getGameState()){
+        GameState.GameWon -> "Heroes WONN"
+        GameState.GameLost -> "Monsters won :C"
+        GameState.GameOngoing -> "Game ongoing"
+    }
+
+    println("-------------------------------------------------------------------------------------------")
+    println(message)
 
 
 
