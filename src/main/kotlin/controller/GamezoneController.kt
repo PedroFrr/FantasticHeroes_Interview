@@ -28,7 +28,6 @@ class GamezoneController(private val gamezone: Gamezone) {
 
     }
 
-    //TODO Refactor this method. It has too many responsibilities and too many conditions
     //Moves Character (Heroes and Monsters) on the map after all the validations are good
     fun moveCharacter(character: MapCharacter, direction: Directions) {
 
@@ -99,7 +98,6 @@ class GamezoneController(private val gamezone: Gamezone) {
 
     fun getNumberOfCharactersOnTheMap() = gamezone.getNumberOfCharactersOnTheMap()
 
-    //TODO maybe still refactor
     //On a real app I would this processing asynchronously as to not block the User actions or set a loading state or something
     fun setFightBetweenOpponents(firstOpponent: MapCharacter, secondOpponent: MapCharacter) {
 

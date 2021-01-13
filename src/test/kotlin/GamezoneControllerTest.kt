@@ -13,7 +13,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-//TODO Refactor tests as I think some things can be in the setup since they repeat
 class GamezoneControllerTest {
 
     private lateinit var grid: Grid
@@ -51,10 +50,8 @@ class GamezoneControllerTest {
         val cellValue = gamezone.getCellValue(cellAtExpectedPosition)
 
         assertNotNull(cellValue)
-
     }
 
-    //TODO Refactor. Depends on the move character. I don't think I need to do getCellValue so many times
     @Test
     fun `when moving character from Cell, the Cell he moved from should be null`() {
         //I have to force this position otherwise the Hero might be randomly put on a edge and in this case he will not move (meaning its previous cell will not become null)
@@ -83,7 +80,6 @@ class GamezoneControllerTest {
         gamezoneController.moveCharacter(shieldHero, Directions.East)
         val mapCharacterCellAfterMovement = gamezone.getCharacterCell(shieldHero)
 
-        //TODO maybe he shouldn't remain on the same place but instead return an error or something like that
         assertEquals(cellAtTheEdge, mapCharacterCellAfterMovement) //the Character should remain on the same place
 
     }
